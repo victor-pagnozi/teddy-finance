@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.turbo
+.DS_Store
+.env
+apps/*/.env
+pnpm-lock.yaml
+coverage
+*.log
+.idea
+.vscode
