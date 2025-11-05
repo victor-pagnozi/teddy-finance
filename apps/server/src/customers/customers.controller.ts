@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors
 } from "@nestjs/common";
 import { CustomersService } from "./customers.service";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
@@ -19,6 +20,7 @@ import {
   ApiResponse,
 } from "@nestjs/swagger";
 import { Customer } from "./customer.entity";
+import { CacheInterceptor } from "@nestjs/cache-manager";
 
 @Controller("customers")
 export class CustomersController {
@@ -33,6 +35,7 @@ export class CustomersController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   @ApiOperation({ summary: "Get customers (paginated)" })
   findAll(@Query() query: ListCustomersDto) {
     const page = query.page ?? 1;

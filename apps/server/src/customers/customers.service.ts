@@ -4,12 +4,15 @@ import { Repository } from "typeorm";
 import { Customer } from "./customer.entity";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
+import { InjectQueue } from "@nestjs/bullmq";
+import { Queue } from "bullmq";
 
 @Injectable()
 export class CustomersService {
   constructor(
     @InjectRepository(Customer)
-    private readonly customersRepository: Repository<Customer>
+    private readonly customersRepository: Repository<Customer>,
+    @InjectQueue("customers") private readonly customersQueue: Queue
   ) {}
 
   async create(dto: CreateCustomerDto): Promise<Customer> {
@@ -20,7 +23,15 @@ export class CustomersService {
       salary: dto.salary ?? 0,
       company: dto.company ?? 0,
     });
-    return this.customersRepository.save(entity);
+    const saved = await this.customersRepository.save(entity);
+
+    await this.customersQueue.add(
+      "customer_created",
+      { id: saved.id, name: saved.name },
+      { removeOnComplete: true, removeOnFail: true }
+    );
+
+    return saved;
   }
 
   async findAllPaginated(
@@ -54,6 +65,7 @@ export class CustomersService {
 
   async remove(id: string): Promise<void> {
     const result = await this.customersRepository.delete(id);
+
     if (!result.affected) throw new NotFoundException("Customer not found");
   }
 }

@@ -32,6 +32,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
 
   website:
     build:
@@ -41,6 +43,12 @@ services:
       - "8080:8080"
     depends_on:
       - server
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
 
 volumes:
   pgdata:
