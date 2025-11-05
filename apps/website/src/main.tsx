@@ -10,6 +10,8 @@ import Customers from "./pages/Customers";
 import Selected from "./pages/Selected";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,7 @@ root.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <RouterProvider router={router} />
+        <ToastContainer position="top-right" autoClose={3000} newestOnTop hideProgressBar={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover theme="light" />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

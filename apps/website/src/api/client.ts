@@ -1,12 +1,12 @@
-import type { Customer } from "@teddy/core";
+import type { Customer, Paginated } from "@teddy/core";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
-export async function listCustomers(): Promise<Customer[]> {
-  const res = await fetch(`${API_URL}/customers`);
+export async function listCustomers(page = 1, pageSize = 16): Promise<Paginated<Customer>> {
+  const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
+  const res = await fetch(`${API_URL}/customers?${params.toString()}`);
   if (!res.ok) throw new Error("Falha ao carregar clientes");
-  const data = await res.json();
-  return data;
+  return res.json();
 }
 
 export async function createCustomer(
