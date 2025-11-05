@@ -3,12 +3,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": ".",
+    "paths": {}
   },
   "include": ["src", "vite-env.d.ts"],
   "exclude": ["node_modules", "dist"],
-  "baseUrl": ".",
-  "paths": {
-    "@teddy/core": ["../../packages/core/src"]
-  }
+  "baseUrl": "."
 }

@@ -10,7 +10,7 @@ export async function listCustomers(): Promise<Customer[]> {
 }
 
 export async function createCustomer(
-  input: Pick<Customer, "name" | "email" | "phone">
+  input: Pick<Customer, "name" | "email" | "phone" | "salary" | "company">
 ) {
   const res = await fetch(`${API_URL}/customers`, {
     method: "POST",
@@ -23,7 +23,9 @@ export async function createCustomer(
 
 export async function updateCustomer(
   id: string,
-  input: Partial<Pick<Customer, "name" | "email" | "phone">>
+  input: Partial<
+    Pick<Customer, "name" | "email" | "phone" | "salary" | "company">
+  >
 ) {
   const res = await fetch(`${API_URL}/customers/${id}`, {
     method: "PATCH",

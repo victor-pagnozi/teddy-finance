@@ -1,29 +1,51 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useAppDispatch } from "../store";
+import { setName as setUserName } from "../store/userSlice";
 
 export default function Home() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
-
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    navigate("/customers", { state: { name } });
-  }
+  const dispatch = useAppDispatch();
 
   return (
-    <div>
-      <h1>Bem-vindo</h1>
-      <p>Insira seu nome para continuar:</p>
-      <form onSubmit={onSubmit} style={{ display: "flex", gap: 8 }}>
-        <input
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="calc(100vh - 32px)"
+    >
+      <Box display="flex" flexDirection="column" gap={2} width={360}>
+        <Typography
+          fontFamily="Inter, sans-serif"
+          fontWeight={400}
+          fontSize="36px"
+        >
+          Olá, seja bem-vindo!
+        </Typography>
+
+        <TextField
+          placeholder="Digite o seu nome:"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Seu nome"
+          variant="outlined"
+          fullWidth
         />
-        <button type="submit" disabled={!name.trim()}>
-          Entrar
-        </button>
-      </form>
-    </div>
+
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          disabled={!name.trim()}
+          onClick={() => {
+            dispatch(setUserName(name));
+            navigate("/customers");
+          }}
+        >
+          Confirmar
+        </Button>
+      </Box>
+    </Box>
   );
 }

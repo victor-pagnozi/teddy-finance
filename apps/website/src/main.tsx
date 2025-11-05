@@ -1,10 +1,15 @@
 import React from "react";
+import "@fontsource/inter/400.css";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { theme } from "./theme";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Customers from "./pages/Customers";
 import Selected from "./pages/Selected";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +26,11 @@ const router = createBrowserRouter([
 const root = createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
