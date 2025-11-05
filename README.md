@@ -17,19 +17,24 @@ Monorepo contendo:
    ```bash
    pnpm install
    ```
-2. Suba o Postgres local (Docker):
-   ```bash
-   docker compose up -d
-   ```
-3. Configure as variáveis de ambiente:
+2. Configure as variáveis de ambiente:
    - Copie `apps/server/env.example` para `apps/server/.env`
    - Copie `apps/website/env.example` para `apps/website/.env`
-4. Em desenvolvimento (rodando tudo em paralelo):
+3. Em desenvolvimento (rodando tudo em paralelo):
    ```bash
    pnpm dev
    ```
    - Website em `http://localhost:5173`
    - API em `http://localhost:3000`
+
+### Docker (dev)
+Suba todas as aplicações (db + api + website) com hot-reload:
+```bash
+docker compose up --build
+```
+- Website: `http://localhost:5173`
+- API: `http://localhost:3000`
+- Swagger: `http://localhost:3000/docs`
 
 ### Estrutura
 ```
@@ -70,6 +75,18 @@ flowchart TD
 - TypeORM `synchronize=true` somente em dev (migrations para produção)
 - Tipos compartilhados pelo pacote `@teddy/core`
 - Turborepo orquestra `dev`, `build`, `lint`, `test`
+
+### Swagger
+- A documentação da API está disponível em `http://localhost:3000/docs` quando a API está rodando.
+
+### Deploy (produção com Docker Compose)
+Build e execute os serviços em modo produção:
+```bash
+docker compose -f docker-compose.prod.yml up --build -d
+```
+- Website: `http://localhost:8080`
+- API: `http://localhost:3000`
+- Postgres: porta `5432` (exposta localmente)
 
 ### Perguntas (Painel administrativo)
 1. Quanto tempo levaria?
