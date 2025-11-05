@@ -21,6 +21,12 @@ export class Customer {
   @Column({ type: "varchar", length: 50, nullable: true })
   phone?: string | null;
 
+  @Column({ type: "float", default: 0 })
+  salary!: number;
+
+  @Column({ type: "float", default: 0 })
+  company!: number;
+
   @CreateDateColumn({ type: "timestamptz" })
   createdAt!: Date;
 

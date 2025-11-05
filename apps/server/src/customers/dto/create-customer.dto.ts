@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsOptional, IsString, IsEmail, MaxLength } from "class-validator";
+import { IsOptional, IsString, IsEmail, MaxLength, IsNumber } from "class-validator";
 
 export class CreateCustomerDto {
   @IsString()
@@ -18,4 +18,14 @@ export class CreateCustomerDto {
   @MaxLength(50)
   @ApiProperty({ description: "Telefone do cliente" })
   phone?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({ description: "Salário do cliente", example: 0 })
+  salary?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({ description: "Empresa (valor)", example: 0 })
+  company?: number;
 }

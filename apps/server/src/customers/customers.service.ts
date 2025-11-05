@@ -17,6 +17,8 @@ export class CustomersService {
       name: dto.name,
       email: dto.email ?? null,
       phone: dto.phone ?? null,
+      salary: dto.salary ?? 0,
+      company: dto.company ?? 0,
     });
     return this.customersRepository.save(entity);
   }

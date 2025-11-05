@@ -3,6 +3,8 @@ export type Customer = {
   name: string;
   email?: string;
   phone?: string;
+  salary: number;
+  company: number;
   createdAt: string;
   updatedAt: string;
 };
