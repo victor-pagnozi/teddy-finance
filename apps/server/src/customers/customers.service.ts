@@ -23,8 +23,21 @@ export class CustomersService {
     return this.customersRepository.save(entity);
   }
 
-  async findAll(): Promise<Customer[]> {
-    return this.customersRepository.find({ order: { createdAt: "DESC" } });
+  async findAllPaginated(
+    page = 1,
+    pageSize = 16
+  ): Promise<{
+    items: Customer[];
+    total: number;
+    page: number;
+    pageSize: number;
+  }> {
+    const [items, total] = await this.customersRepository.findAndCount({
+      order: { createdAt: "DESC" },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+    return { items, total, page, pageSize };
   }
 
   async findOne(id: string): Promise<Customer> {

@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from "@nestjs/common";
 import { CustomersService } from "./customers.service";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
+import { ListCustomersDto } from "./dto/list-customers.dto";
 import {
   ApiBody,
   ApiOkResponse,
@@ -31,15 +33,11 @@ export class CustomersController {
   }
 
   @Get()
-  @ApiOperation({ summary: "Get all customers" })
-  @ApiResponse({ status: 200, description: "Customers fetched successfully" })
-  @ApiOkResponse({
-    type: Customer,
-    isArray: true,
-    description: "Customers fetched successfully",
-  })
-  findAll() {
-    return this.customersService.findAll();
+  @ApiOperation({ summary: "Get customers (paginated)" })
+  findAll(@Query() query: ListCustomersDto) {
+    const page = query.page ?? 1;
+    const pageSize = query.pageSize ?? 16;
+    return this.customersService.findAllPaginated(page, pageSize);
   }
 
   @Get(":id")
