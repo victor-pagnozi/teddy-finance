@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "@teddy/server", "dev"]
+CMD ["sh", "-lc", "pnpm -w install --no-frozen-lockfile && pnpm --filter @teddy/server install --no-frozen-lockfile && cd apps/server && pnpm dev"]

@@ -6,6 +6,7 @@ import { CacheModule } from "@nestjs/cache-manager";
 import { BullModule } from "@nestjs/bullmq";
 import { redisStore } from "cache-manager-redis-yet";
 import { MetricsModule } from "./metrics/metrics.module";
+import { HealthController } from "./health.controller";
 
 @Module({
   imports: [
@@ -68,5 +69,6 @@ import { MetricsModule } from "./metrics/metrics.module";
     CustomersModule,
     MetricsModule,
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}
